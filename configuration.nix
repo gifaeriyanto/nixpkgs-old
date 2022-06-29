@@ -40,19 +40,7 @@
 
     # Always enable the shell system-wide, even if it's already enabled in your home.nix. Otherwise it wont source the necessary files.
     # https://nixos.wiki/wiki/Command_Shell#Changing_default_shell
-    fish = {
-      enable = true;
-
-      # Needed to address bug where $PATH is not properly set for fish:
-      # https://github.com/LnL7/nix-darwin/issues/122
-      shellInit = ''
-        for p in (string split : ${config.environment.systemPath})
-          if not contains $p $fish_user_paths
-            set -g fish_user_paths $fish_user_paths $p
-          end
-        end
-      '';
-    };
+    fish.enable = true;
   };
 
 
