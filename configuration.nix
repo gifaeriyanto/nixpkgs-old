@@ -4,6 +4,10 @@
 
   users.nix.configureBuildUsers = true;
 
+  # Used for backwards compatibility, please read the changelog before changing.
+  # $ darwin-rebuild changelog
+  system.stateVersion = 4;
+
   nix = {
     binaryCaches = [
       "https://cache.nixos.org/"

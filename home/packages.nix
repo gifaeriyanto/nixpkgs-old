@@ -28,7 +28,6 @@
       wget
       tree
       gnupg
-      jq
 
       ################################## 
       # Nix-related packages
@@ -46,6 +45,11 @@
       # Dependency managers
       ##################################
       yarn
+
+      ##################################
+      # Shell integration
+      ##################################
+      home-manager
     ];
   };
 }
