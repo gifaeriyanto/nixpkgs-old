@@ -6,6 +6,9 @@
       # https://rycee.gitlab.io/home-manager/options.html#opt-programs.fish.enable
       enable = true;
 
+      useBabelfish = true;
+      babelfishPackage = pkgs.babelfish;
+
       functions = {
       };
 
@@ -32,6 +35,14 @@
       };
 
       shellInit = ''
+        # Needed to address bug where $PATH is not properly set for fish:
+        # https://github.com/LnL7/nix-darwin/issues/122
+        for p in (string split : ${config.environment.systemPath})
+          if not contains $p $fish_user_paths
+            set -g fish_user_paths $fish_user_paths $p
+          end
+        end
+
         # Fish color
         set -U fish_color_command 6CB6EB --bold
         set -U fish_color_redirection DEB974
