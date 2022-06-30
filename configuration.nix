@@ -40,7 +40,21 @@
 
     # Always enable the shell system-wide, even if it's already enabled in your home.nix. Otherwise it wont source the necessary files.
     # https://nixos.wiki/wiki/Command_Shell#Changing_default_shell
-    fish.enable = true;
+    fish = {
+      enable = true;
+      # Undefined in home-manager
+      useBabelfish = true;
+      babelfishPackage = pkgs.babelfish;
+      # Needed to address bug where $PATH is not properly set for fish:
+      # https://github.com/LnL7/nix-darwin/issues/122
+      shellInit = ''
+        for p in (string split : ${config.environment.systemPath})
+          if not contains $p $fish_user_paths
+            set -g fish_user_paths $fish_user_paths $p
+          end
+        end
+      '';
+    };
   };
 
 
@@ -50,6 +64,13 @@
   services.nix-daemon.enable = true;
 
   environment = {
+    # Add shells installed by nix to /etc/shells file
+    shells = with pkgs; [
+      bashInteractive
+      fish
+      zsh
+    ];
+
     # Apps
     # `home-manager` currently has issues adding them to `~/Applications`
     # Issue: https://github.com/nix-community/home-manager/issues/1341
@@ -69,6 +90,10 @@
       postman
       vscode
     ];
+
+    variables = {
+      SHELL = "${pkgs.fish}/bin/fish";
+    };
   };
 
   # Fonts
