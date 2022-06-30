@@ -4,7 +4,7 @@ let
   gifaeriyanto = {
     name = "Gifa Eriyanto";
     email = "gifa.eriyanto@gmail.com";
-    signingKey = "2662BA9E137481B7";
+    signingKey = "78621E1AED00697E";
   };
 in
 {
