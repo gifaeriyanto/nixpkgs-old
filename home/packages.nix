@@ -28,6 +28,7 @@
       wget
       tree
       gnupg
+      jq
 
       ################################## 
       # Nix-related packages
